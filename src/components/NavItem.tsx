@@ -1,12 +1,14 @@
+// NavItem.tsx
+
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-const NavItem = ({ href, text }: { href: any; text: string }) => {
+const NavItem = ({ href, text, showNav }: { href: any; text: string; showNav?: boolean }) => {
   const router = useRouter();
   const isActive = router.asPath === href;
 
   return (
-    <NextLink href={{ pathname: href, query: { showNav: href !== '/' } }}>
+    <NextLink href={{ pathname: href, query: showNav ? { showNav: true } : undefined }}>
       <span
         className={`${
           isActive

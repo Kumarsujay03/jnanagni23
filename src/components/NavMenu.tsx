@@ -1,3 +1,5 @@
+// NavMenu.tsx
+
 import { useEffect, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import NextLink from 'next/link';
@@ -37,7 +39,7 @@ const defaultNavItems = [
 const NavMenu = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth(); // using the AuthContext hook
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
 
   useEffect(() => {
@@ -77,6 +79,7 @@ const NavMenu = () => {
       return prevNavItems;
     });
   }, [user]);
+
   const handleClick = () => {
     setIsOpen(true);
   };
@@ -86,43 +89,39 @@ const NavMenu = () => {
   };
 
   return (
-    <div className=' text-white'>
-    <div
-      className='flex items-center justify-between max-w-6xl lg:max-w-[72rem] xl:max-w-6xl px-4 py-6 mx-auto sm:px-6'
-    >
-      <div className='flex justify-start lg:w-0  transition whitespace-nowrap hover:transition duration-300 text-2xl font-bold cursor-pointer  '>
-        <span className='sr-only'>Logo</span>
-        <NextLink href='/' passHref>
-          <span className=' opacity-100 hover:text-lightGreen dark:hover:text-lightGreen '>
-            JÑĀNĀGNI
-          </span>
-        </NextLink>
+    <div className='text-white'>
+      <div className='flex items-center justify-between max-w-6xl lg:max-w-[72rem] xl:max-w-6xl px-4 py-6 mx-auto sm:px-6'>
+        <div className='flex justify-start lg:w-0 transition whitespace-nowrap hover:transition duration-300 text-2xl font-bold cursor-pointer '>
+          <span className='sr-only'>Logo</span>
+          <NextLink href='/' passHref>
+            <span className=' opacity-100 hover:text-lightGreen dark:hover:text-lightGreen '>JÑĀNĀGNI</span>
+          </NextLink>
+        </div>
+        <div className='-my-2 -mr-2 lg:hidden' onClick={handleClick}>
+          <MobileMenu onClick={handleClick} />
+        </div>
+        <nav className='hidden space-x-6 text-lg justify-center lg:flex'>
+          {navItems.map(({ href, text }, index) => (
+            <NavItem key={index} href={href} text={text} showNav={text !== 'Home'} />
+          ))}
+          <>
+            {email ? (
+              <button
+                onClick={handleLogout}
+                className='hover:text-lightGreen dark:hover:text-emerald-500 bg-[#EACD69] hover:text-white text-black font-bold py-2 px-4 rounded-full text-center'
+              >
+                Logout
+              </button>
+            ) : (
+              <NextLink href='/login'>
+                <p className='hover:text-lightGreen dark:hover:text-emerald-500 bg-[#EACD69] hover:text-white text-black font-bold py-2 px-4 rounded-full text-center'>
+                  Login
+                </p>
+              </NextLink>
+            )}
+          </>
+        </nav>
       </div>
-      <div className='-my-2 -mr-2 lg:hidden' onClick={handleClick}>
-        <MobileMenu onClick={handleClick} />
-      </div>
-      <nav className='hidden space-x-6 text-lg justify-center lg:flex '>
-        {navItems.map(({ href, text }, index) => (
-          <NavItem key={index} href={href} text={text} />
-        ))}
-        <>
-          {email ? (
-            <button
-              onClick={handleLogout}
-              className='hover:text-lightGreen dark:hover:text-emerald-500 bg-[#EACD69] hover:text-white text-black font-bold py-2 px-4 rounded-full text-center'
-            >
-              Logout
-            </button>
-          ) : (
-            <NextLink href='/login'>
-              <p className='hover:text-lightGreen dark:hover:text-emerald-500 bg-[#EACD69] hover:text-white text-black font-bold py-2 px-4 rounded-full text-center'>
-                Login
-              </p>
-            </NextLink>
-          )}
-        </>
-      </nav>
-    </div>
       {/* Mobile Menu Dialog */}
       {isOpen && (
         <Dialog open={isOpen} onClose={handleClose} className='fixed inset-0 z-50 lg:hidden'>
@@ -146,7 +145,7 @@ const NavMenu = () => {
             <ul className='space-y-6'>
               {navItems.map(({ href, text }) => (
                 <li key={href}>
-                  <NextLink href={{ pathname: href, query: { showNav: text !== 'Home' ? true : false } }}>
+                  <NextLink href={href}>
                     <p className='hover:text-lightGreen dark:hover:text-emerald-500'>{text}</p>
                   </NextLink>
                 </li>
@@ -169,7 +168,6 @@ const NavMenu = () => {
                 )}
               </li>
             </ul>
-
           </div>
         </Dialog>
       )}

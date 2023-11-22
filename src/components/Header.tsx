@@ -1,8 +1,3 @@
-import Image from 'next/image';
-import logo from '../images/logo.png'
-import logo_compressed from '../images/logo_compressed.png'
-import logoText from '../images/logo_text.png';
-
 const Header = () => {
     return (
         <>
