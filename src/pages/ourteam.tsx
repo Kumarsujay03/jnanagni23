@@ -1,7 +1,7 @@
 import React from 'react'
-import {  mehfooz, munavvar, thanay, profile,mash } from '../images/team'
+import {  sujay, profile } from '../images/team'
 import Image from 'next/image'
-import { twitter, linkedin, github } from '../images/icons';
+import { twitter, linkedin, github} from '../images/icons';
 import NavMenu from '@/components/NavMenu';
 import { useRouter } from 'next/router';
 
@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 const teamDetails = [
     {
         name: 'Sujay Kumar',
-        image: profile,
+        image: sujay,
         year: "3'rd year ECE",
         linkedin: 'https://www.linkedin.com/in/kumarsujay03/',
         github: 'https://github.com/kumar_sujay03',
         twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/kumar_sujay03',
+        instagram: 'https://www.instagram.com/Kumarsujay03',
 
     },
     {
