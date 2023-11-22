@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import NavMenu from '@/components/NavMenu';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useAuth } from '@/context/authContext';
 
@@ -21,6 +21,9 @@ const AdminDashboard: React.FC = () => {
     const [isShowNav, setIsShowNav] = useState(true);
     const [eventRegistrations, setEventRegistrations] = useState<EventRegistrationType[]>([]);
     const { user } = useAuth(); // Destructure the user object
+    const [eventCounts, setEventCounts] = useState<Record<string, number>>({});
+    const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+    const [participantDetails, setParticipantDetails] = useState<EventRegistrationType[]>([]);
 
     useEffect(() => {
         const handlePopstate = () => {
@@ -65,13 +68,74 @@ const AdminDashboard: React.FC = () => {
         fetchEventRegistrations();
     }, [user]);
 
+    useEffect(() => {
+        const fetchEventCounts = async () => {
+            try {
+                // Fetch all events
+                const eventsCollection = collection(db, 'events');
+                const eventsSnapshot = await getDocs(eventsCollection);
+
+                const counts: Record<string, number> = {};
+
+                // Loop through each event and fetch the count of registrations
+                for (const eventDoc of eventsSnapshot.docs) {
+                    const event = eventDoc.data();
+                    const eventRegistrationSnapshot = await getDocs(
+                        query(collection(db, 'event_registration'), where('event_id', '==', eventDoc.id))
+                    );
+
+                    counts[event.name] = eventRegistrationSnapshot.size;
+                }
+
+                setEventCounts(counts);
+            } catch (error) {
+                console.error('Error fetching event counts:', error);
+            }
+        };
+
+        fetchEventCounts();
+    }, []);
+
+    const handleShowDetails = async (eventName: string) => {
+        try {
+            // Fetch participant details for the selected event
+            const eventRegistrationSnapshot = await getDocs(
+                query(collection(db, 'event_registration'), where('event_name', '==', eventName))
+            );
+
+            const details: EventRegistrationType[] = eventRegistrationSnapshot.docs.map((doc) => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    event_id: data.event_id,
+                    event_name: data.event_name,
+                    user_id: data.user_id,
+                    user_name: data.user_name,
+                    user_phone: data.user_phone,
+                    user_email: data.user_email,
+                };
+            });
+
+            setSelectedEvent(eventName);
+            setParticipantDetails(details);
+        } catch (error) {
+            console.error(`Error fetching details for ${eventName}:`, error);
+        }
+    };
+
     return (
         <div>
             {isShowNav && <NavMenu />}
 
             <div className='bg-[#151515] pb-10'>
                 <div className='md:px-12 xl:px-6'>
-                    {/* Your other components here */}
+                    <div className='relative pt-36'>
+                        <div className='lg:w-2/3 text-center mx-auto'>
+                            <h1 className='text-white font-bold text-4xl md:text-6xl xl:text-7xl'>
+                                Admin Dashboard<span className='text-primary text-green-700'>.</span>
+                            </h1>
+                        </div>
+                    </div>
 
                     {/* Display the table */}
                     <div className='mx-auto px-2 py-2 lg:px-10 lg:pt-12'>
@@ -79,35 +143,54 @@ const AdminDashboard: React.FC = () => {
                             <table className='min-w-full'>
                                 <thead>
                                     <tr>
-                                        <th className='py-3 px-6 text-left'>Event Name</th>
-                                        <th className='py-3 px-6 text-left'>Total Registrations</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Event Name</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Total Registrations</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {eventRegistrations.map((registration) => (
-                                        <tr key={registration.id}>
-                                            <td className='py-3 px-6'>{registration.event_name}</td>
-                                            {/* Fetch and display the total number of registrations for each event */}
-                                            <td className='py-3 px-6'>
-                                                {Object.entries(
-                                                    eventRegistrations.reduce((accumulator, registration) => {
-                                                        if (registration.event_id in accumulator) {
-                                                            accumulator[registration.event_id]++;
-                                                        } else {
-                                                            accumulator[registration.event_id] = 1;
-                                                        }
-                                                        return accumulator;
-                                                    }, {} as Record<string, number>)
-                                                ).map(([eventId, count]) => (
-                                                    <div key={eventId}>
-                                                        {eventId}: {count}
-                                                    </div>
-                                                ))}
+                                    {/* Display rows for each event and its count */}
+                                    {Object.entries(eventCounts).map(([eventName, count]) => (
+                                        <tr key={eventName}>
+                                            <td className='py-3 px-6 text-white'>{eventName}</td>
+                                            <td className='py-3 px-6 text-white'>{count}</td>
+                                            <td className='py-3 px-6 text-white'>
+                                                <button
+                                                    className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                                    onClick={() => handleShowDetails(eventName)}
+                                                >
+                                                    Show Details
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
+
+                            {/* Display the sub-table for participant details */}
+                            {selectedEvent && (
+                                <div>
+                                    <h2 className='text-white text-lg font-bold mt-4'>Participant Details for {selectedEvent}</h2>
+                                    <table className='min-w-full mt-2'>
+                                        <thead>
+                                            <tr>
+                                                <th className='py-3 px-6 text-left text-white text-lg font-bold'>Name</th>
+                                                <th className='py-3 px-6 text-left text-white text-lg font-bold'>Email</th>
+                                                <th className='py-3 px-6 text-left text-white text-lg font-bold'>Phone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {participantDetails.map((participant) => (
+                                                <tr key={participant.id}>
+                                                    <td className='py-3 px-6 text-white'>{participant.user_name}</td>
+                                                    <td className='py-3 px-6 text-white'>{participant.user_email}</td>
+                                                    <td className='py-3 px-6 text-white'>{participant.user_phone}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
