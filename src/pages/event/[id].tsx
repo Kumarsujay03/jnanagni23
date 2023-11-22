@@ -144,7 +144,7 @@ const EventDetails = () => {
                     user_phone:phone,
                 });
 
-                alert('Event register successfully! Event name:');
+                alert('Event register successfully!');
             }
 
             // Toggle the registration status

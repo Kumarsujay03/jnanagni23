@@ -244,7 +244,7 @@ export default function Login() {
                     <div className="flex items-center">
                         <button
                             onClick={handleSubmit}
-                            className="inline-block mt-5 w-full rounded-lg bg-[#EACD69] px-5 py-3 text-sm font-bold text-black"
+                            className="inline-block mt-5 w-full hover:text-lightGreen dark:hover:text-emerald-500 rounded-lg bg-[#EACD69] px-5 py-3 text-sm font-bold text-black"
                         >
                             {isSignUp ? (signUpLoading ? 'Signing Up...' : 'Sign Up') : (loginLoading ? 'Logging In...' : 'Login')}
                         </button>
