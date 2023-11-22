@@ -7,6 +7,8 @@ import { collection, addDoc, getDocs, query, where, CollectionReference, deleteD
 import { db } from '../../../firebase';
 import {useAuth} from '@/context/authContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Define the EventType interface
 interface EventType {
@@ -130,7 +132,7 @@ const EventDetails = () => {
                 if (!existingRegistration.empty) {
                     existingRegistration.forEach(async (doc) => {
                         await deleteDoc(doc.ref);
-                        alert('Event data deleted successfully!');
+                        toast.success('Event data deleted successfully!');
                     });
                 }
             } else {
@@ -144,7 +146,7 @@ const EventDetails = () => {
                     user_phone:phone,
                 });
 
-                alert('Event register successfully!');
+                toast.success('Event register successfully!');
             }
 
             // Toggle the registration status
@@ -256,6 +258,7 @@ const EventDetails = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         </>
     );

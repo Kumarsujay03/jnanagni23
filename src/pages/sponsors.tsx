@@ -8,7 +8,6 @@ import { db } from './../../firebase';
 interface EventType {
     id: string;
     image: string;
-    // Add other properties or adjust as needed
 }
 
 const Sponsors = () => {
@@ -23,7 +22,7 @@ const Sponsors = () => {
                 const sponcerData: EventType[] = sponcersCollection.docs.map((doc) => {
                     const data = doc.data();
                     return {
-                        id: doc.id, // Add the document ID to the event data
+                        id: doc.id,
                         image: data.image || 'Default Image URL',
                     };
                 });
@@ -52,12 +51,15 @@ const Sponsors = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {sponsors.map((sponsor) => (
                                 <div key={sponsor.id} className='bg-slate-100 p-3 justify-center flex rounded-3xl m-4'>
-                                    <div className="w-full h-auto ">
-                                        <Image className="h-auto max-w-full rounded-xl" 
-                                        src={sponsor.image} 
-                                        alt="" 
-                                        width={400}
-                                        height={400} />
+                                    <div className="w-full h-auto overflow-hidden">
+                                        <Image
+                                            className="w-full h-auto rounded-xl"
+                                            src={sponsor.image}
+                                            alt=""
+                                            width={400}
+                                            height={400}
+                                            priority
+                                        />
                                     </div>
                                 </div>
                             ))}
