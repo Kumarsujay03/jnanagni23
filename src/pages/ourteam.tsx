@@ -87,6 +87,16 @@ const teamDetails = [
         instagram: 'https://www.instagram.com/',
 
     },
+    {
+        name: 'Rudra Prakash Pandey',
+        image: profile,
+        year: "3'rd year CSE",
+        linkedin: 'https://www.linkedin.com/in/',
+        github: 'https://github.com/',
+        twitter: 'https://twitter.com/',
+        instagram: 'https://www.instagram.com/',
+
+    },
 
 ]
 const Ourteam = () => {
