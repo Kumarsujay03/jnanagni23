@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import NavMenu from '@/components/NavMenu';
-import { collection, getDocs, query, where, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useAuth } from '@/context/authContext';
 
@@ -14,6 +14,7 @@ interface EventRegistrationType {
     user_name: string;
     user_phone: string;
     user_email: string;
+    verified: boolean;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -55,6 +56,7 @@ const AdminDashboard: React.FC = () => {
                             user_name: data.user_name,
                             user_phone: data.user_phone,
                             user_email: data.user_email,
+                            verified: data.verified || false,
                         };
                     });
 
@@ -113,6 +115,7 @@ const AdminDashboard: React.FC = () => {
                     user_name: data.user_name,
                     user_phone: data.user_phone,
                     user_email: data.user_email,
+                    verified: data.verified || false,
                 };
             });
 
@@ -120,6 +123,25 @@ const AdminDashboard: React.FC = () => {
             setParticipantDetails(details);
         } catch (error) {
             console.error(`Error fetching details for ${eventName}:`, error);
+        }
+    };
+
+    const handleVerify = async (participantId: string, newStatus: boolean) => {
+        try {
+            // Update the verification status in Firestore
+            const participantDocRef = doc(db, 'event_registration', participantId);
+            await updateDoc(participantDocRef, {
+                verified: newStatus,
+            });
+    
+            // Update the local state
+            setParticipantDetails((prevDetails) =>
+                prevDetails.map((participant) =>
+                    participant.id === participantId ? { ...participant, verified: newStatus } : participant
+                )
+            );
+        } catch (error) {
+            console.error('Error updating verification status:', error);
         }
     };
 
@@ -185,6 +207,13 @@ const AdminDashboard: React.FC = () => {
                                                     <td className='py-3 px-6 text-white'>{participant.user_name}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_email}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_phone}</td>
+                                                    <button
+                                                        className={`text-white ${participant.verified ? 'bg-green-700' : 'bg-red-700'
+                                                            } hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
+                                                        onClick={() => handleVerify(participant.id, !participant.verified)}
+                                                    >
+                                                        {participant.verified ? 'Verified' : 'Unverified'}
+                                                    </button>
                                                 </tr>
                                             ))}
                                         </tbody>
