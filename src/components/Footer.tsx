@@ -64,7 +64,7 @@ const Footer = () => {
 
 
                         <p className="mt-4 text-sm  text-gray-500 sm:order-first sm:mt-0">
-                            &copy; 2023 JNANAGNI Tech team
+                            &copy; 2023 JNANAGNI Tech team   <br/>Contact: jnanagni@gkv.ac.in
                         </p>
                     </div>
 

@@ -15,6 +15,7 @@ interface EventRegistrationType {
     user_phone: string;
     user_email: string;
     verified: boolean;
+    user_registeration: string;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -56,6 +57,7 @@ const AdminDashboard: React.FC = () => {
                             user_name: data.user_name,
                             user_phone: data.user_phone,
                             user_email: data.user_email,
+                            user_registeration: data.user_registrationNUm,
                             verified: data.verified || false,
                         };
                     });
@@ -115,6 +117,7 @@ const AdminDashboard: React.FC = () => {
                     user_name: data.user_name,
                     user_phone: data.user_phone,
                     user_email: data.user_email,
+                    user_registeration: data.user_registrationNUm,
                     verified: data.verified || false,
                 };
             });
@@ -199,6 +202,7 @@ const AdminDashboard: React.FC = () => {
                                                 <th className='py-3 px-6 text-left text-white text-lg font-bold'>Name</th>
                                                 <th className='py-3 px-6 text-left text-white text-lg font-bold'>Email</th>
                                                 <th className='py-3 px-6 text-left text-white text-lg font-bold'>Phone</th>
+                                                <th className='py-3 px-6 text-left text-white text-lg font-bold'>Registration</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -207,6 +211,7 @@ const AdminDashboard: React.FC = () => {
                                                     <td className='py-3 px-6 text-white'>{participant.user_name}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_email}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_phone}</td>
+                                                    <td className='py-3 px-6 text-white'>{participant.user_registeration}</td>
                                                     <button
                                                         className={`text-white ${participant.verified ? 'bg-green-700' : 'bg-red-700'
                                                             } hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}

@@ -6,6 +6,7 @@ import { db } from '../../firebase';
 import Image from 'next/image';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 // Define the Event interface
 interface EventType {
@@ -108,6 +109,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
