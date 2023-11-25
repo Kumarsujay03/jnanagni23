@@ -18,7 +18,8 @@ const firebaseConfig = {
 // Singleton pattern
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export { db };
+const realtimeDb = getDatabase(app);
+export { db, realtimeDb };
 export const auth = getAuth(app);
 export const database = getDatabase(app);
 

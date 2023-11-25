@@ -27,6 +27,8 @@ export const AuthProvider = ({ children }) => {
             phone: userData.phone,
             registration: userData.registrationNumber,
             isAdmin: userData.isAdmin || false,
+            isCore: userData.isCore || false,
+            isVerified: userData.isVerified || false,
           });
         } else {
           setUser(null);

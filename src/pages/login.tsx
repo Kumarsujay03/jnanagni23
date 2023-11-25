@@ -55,7 +55,7 @@ export default function Login() {
     const validatePassword = (value: string): boolean =>
         /^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(value);
     const validateRegistrationNumber = (value: string): boolean =>
-        /^\d+$/.test(value);
+        /^\d{9}$/.test(value);
 
     const handleFirebaseError = (error: any) => {
 
@@ -248,7 +248,7 @@ export default function Login() {
                                 />
                                 {!validateRegistrationNumber(registrationNumber) && registrationNumber && (
                                     <p className="text-red-500 mt-2">
-                                        Please enter a valid registration number (numeric only)
+                                        Please enter a valid registration number
                                     </p>
                                 )}
                             </div>

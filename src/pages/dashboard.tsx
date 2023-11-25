@@ -76,7 +76,14 @@ const Dashboard: React.FC = () => {
         <div className='md:px-12 xl:px-6'>
           <div className='relative pt-36'>
             <div className='lg:w-2/3 text-center mx-auto'>
-              <h1 className='text-white font-bold text-4xl md:text-6xl xl:text-7xl'>
+              {user?.isVerified && (
+                <>
+                  <button className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-4">
+                    Download E-Pass
+                  </button>
+                </>
+              )}
+              <h1 className='text-white font-bold text-4xl md:text-6xl xl:text-7xl mb-8'>
                 Registered Events<span className='text-primary text-green-700'>.</span>
               </h1>
             </div>

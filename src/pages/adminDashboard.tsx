@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import NavMenu from '@/components/NavMenu';
 import { collection, getDocs, query, where, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
+import { db, realtimeDb } from '../../firebase';
 import { useAuth } from '@/context/authContext';
+import { DataSnapshot, Database, DatabaseReference, get, ref, set, update } from 'firebase/database';
 
 // Define the EventRegistration interface
 interface EventRegistrationType {
@@ -17,15 +18,26 @@ interface EventRegistrationType {
     verified: boolean;
     user_registeration: string;
 }
+interface UserDetailsType {
+    user_id: string;
+    name: string;
+    email: string;
+    phone: number;
+    registration: string;
+    isVerified: boolean;
+}
 
 const AdminDashboard: React.FC = () => {
     const router = useRouter();
     const [isShowNav, setIsShowNav] = useState(true);
     const [eventRegistrations, setEventRegistrations] = useState<EventRegistrationType[]>([]);
-    const { user } = useAuth(); // Destructure the user object
+    const { user } = useAuth();
     const [eventCounts, setEventCounts] = useState<Record<string, number>>({});
     const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
     const [participantDetails, setParticipantDetails] = useState<EventRegistrationType[]>([]);
+    const [userDetails, setUserDetails] = useState<UserDetailsType[]>([]);
+
+
 
     useEffect(() => {
         const handlePopstate = () => {
@@ -136,7 +148,7 @@ const AdminDashboard: React.FC = () => {
             await updateDoc(participantDocRef, {
                 verified: newStatus,
             });
-    
+
             // Update the local state
             setParticipantDetails((prevDetails) =>
                 prevDetails.map((participant) =>
@@ -147,6 +159,65 @@ const AdminDashboard: React.FC = () => {
             console.error('Error updating verification status:', error);
         }
     };
+    const handleUserVerify = async (userId: string, currentStatus: boolean) => {
+        try {
+            // Update the verification status in the Realtime Database
+            const userRef = rtdbRef(realtimeDb, `users/${userId}`);
+            await update(userRef, { isVerified: !currentStatus });
+
+
+            // Update the local state
+            setUserDetails((prevDetails) =>
+                prevDetails.map((user) =>
+                    user.user_id === userId ? { ...user, isVerified: !currentStatus } : user
+                )
+            );
+
+            // Optionally, you can show a success message or handle other UI updates
+            console.log(`User ${userId} has been ${!currentStatus ? 'verified' : 'unverified'}`);
+        } catch (error) {
+            console.error('Error updating user verification status:', error);
+            // Optionally, you can show an error message or handle other UI updates
+        }
+    };
+
+
+    function rtdbRef(realtimeDb: Database, arg1: string): DatabaseReference {
+        return ref(realtimeDb, arg1);
+    }
+
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                if (user && user.isCore) {
+                    const usersRef = rtdbRef(realtimeDb, 'users');
+                    const usersSnapshot = await get(usersRef);
+
+                    const userDetails: UserDetailsType[] = [];
+
+                    usersSnapshot.forEach((userSnapshot: DataSnapshot) => {
+                        const userData = userSnapshot.val();
+                        userDetails.push({
+                            user_id: userSnapshot.key || '',
+                            name: userData.name,
+                            email: userData.email,
+                            phone: userData.phone,
+                            registration: userData.registrationNumber,
+                            isVerified: userData.isVerified || false,
+                        });
+                    });
+
+                    setUserDetails(userDetails);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, [user]);
+
 
     return (
         <div>
@@ -185,6 +256,35 @@ const AdminDashboard: React.FC = () => {
                                                     onClick={() => handleShowDetails(eventName)}
                                                 >
                                                     Show Details
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Name</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Email</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Phone</th>
+                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Registration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userDetails.map((user) => (
+                                        <tr key={user.user_id}>
+                                            <td className='py-3 px-6 text-white'>{user.name}</td>
+                                            <td className='py-3 px-6 text-white'>{user.email}</td>
+                                            <td className='py-3 px-6 text-white'>{user.phone}</td>
+                                            <td className='py-3 px-6 text-white'>{user.registration}</td>
+                                            <td className='py-3 px-6 text-white'>
+                                                <button
+                                                    className={`text-white ${user.isVerified ? 'bg-green-700' : 'bg-red-700'}
+        hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
+                                                    onClick={() => handleUserVerify(user.user_id, user.isVerified)}
+                                                >
+                                                    {user.isVerified ? 'Verified' : 'Unverified'}
                                                 </button>
                                             </td>
                                         </tr>
@@ -234,3 +334,7 @@ const AdminDashboard: React.FC = () => {
 };
 
 export default AdminDashboard;
+function rtdbRef(realtimeDb: Database, arg1: string) {
+    throw new Error('Function not implemented.');
+}
+
