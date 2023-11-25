@@ -37,6 +37,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [registrationNumber, setRegistrationNumber] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isSignUp, setIsSignUp] = useState(false);
     const [loginData, setLoginData] = useState<{ user: UserType } | null>(null);
@@ -53,6 +54,8 @@ export default function Login() {
 
     const validatePassword = (value: string): boolean =>
         /^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(value);
+    const validateRegistrationNumber = (value: string): boolean =>
+        /^\d+$/.test(value);
 
     const handleFirebaseError = (error: any) => {
 
@@ -133,6 +136,7 @@ export default function Login() {
                     name,
                     email,
                     phone,
+                    registrationNumber,
                 }
             );
 
@@ -215,8 +219,8 @@ export default function Login() {
                                     <input
                                         type="text"
                                         className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${validatePhoneNumber(phone)
-                                                ? 'border-green-500'
-                                                : 'border-red-500'
+                                            ? 'border-green-500'
+                                            : 'border-red-500'
                                             }`}
                                         placeholder="Enter your phone number"
                                         value={phone}
@@ -229,6 +233,26 @@ export default function Login() {
                                     )}
                                 </div>
                             </div>
+                            <div>
+                            <label className="sr-only">Registration Number</label>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${validateRegistrationNumber(registrationNumber)
+                                        ? 'border-green-500'
+                                        : 'border-red-500'
+                                    }`}
+                                    placeholder="Enter your GKV registration number"
+                                    value={registrationNumber}
+                                    onChange={(e) => setRegistrationNumber(e.target.value)}
+                                />
+                                {!validateRegistrationNumber(registrationNumber) && registrationNumber && (
+                                    <p className="text-red-500 mt-2">
+                                        Please enter a valid registration number (numeric only)
+                                    </p>
+                                )}
+                            </div>
+                        </div>
                         </>
                     )}
                     <div>
@@ -255,8 +279,8 @@ export default function Login() {
                             <input
                                 type="password"
                                 className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${validatePassword(password)
-                                        ? 'border-green-500'
-                                        : 'border-red-500'
+                                    ? 'border-green-500'
+                                    : 'border-red-500'
                                     }`}
                                 placeholder="Enter password"
                                 value={password}
@@ -287,8 +311,8 @@ export default function Login() {
                                 <input
                                     type="password"
                                     className={`w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm ${confirmPassword === password
-                                            ? 'border-green-500'
-                                            : 'border-red-500'
+                                        ? 'border-green-500'
+                                        : 'border-red-500'
                                         }`}
                                     placeholder="Confirm password"
                                     value={confirmPassword}

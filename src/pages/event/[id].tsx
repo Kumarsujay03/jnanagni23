@@ -116,7 +116,7 @@ const EventDetails = () => {
             }
 
 
-            const { uid, name,phone, email } = user;
+            const { uid, name,phone, email, registration } = user;
             const eventRegistrationCollection = collection(db, 'event_registration');
 
             if (isRegistered) {
@@ -144,6 +144,7 @@ const EventDetails = () => {
                     user_name:name,
                     user_email:email,
                     user_phone:phone,
+                    user_registrationNUm:registration,
                 });
 
                 toast.success('Event register successfully!');

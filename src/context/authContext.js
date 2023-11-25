@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
             name: userData.name,
             email: authUser.email,
             phone: userData.phone,
+            registration: userData.registrationNumber,
             isAdmin: userData.isAdmin || false,
           });
         } else {

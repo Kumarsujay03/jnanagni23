@@ -5,6 +5,7 @@ import Link from 'next/link';
 import NavMenu from '@/components/NavMenu';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase';
+import Footer from '@/components/Footer';
 
 interface EventType {
   id: string;
@@ -130,6 +131,7 @@ const Events = ({ headerShown }: { headerShown: any }) => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
