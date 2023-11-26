@@ -72,8 +72,8 @@ const Dashboard: React.FC = () => {
   const generateAndDownloadQRCode = async () => {
     // Assuming you have some data to encode into the QR code
     const registrationNumber = user.registration;
-    const userName = user.name; 
-    const qrCodeData = `${registrationNumber},${userName}`;
+    const userName = user.uid; 
+    const qrCodeData = `${userName},${registrationNumber}`;
 
     setQrCodeData(qrCodeData);
 
