@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/GooglePay.jsx", "src/components/StatusMessages.jsx", "src/components/Parallax.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/GooglePay.jsx", "src/components/StatusMessages.jsx", "src/components/Parallax.js","qrcode.d.ts"],
   "exclude": ["node_modules"]
 }

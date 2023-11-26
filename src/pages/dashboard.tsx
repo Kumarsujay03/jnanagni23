@@ -7,7 +7,8 @@ import Image from 'next/image';
 import { useAuth } from '@/context/authContext';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
-
+import QRCode from 'qrcode.react';
+import { toCanvas } from 'qrcode';
 // Define the Event interface
 interface EventType {
   id: string;
@@ -20,7 +21,8 @@ const Dashboard: React.FC = () => {
   const router = useRouter();
   const [isShowNav, setIsShowNav] = useState(true);
   const [events, setEvents] = useState<EventType[]>([]);
-  const { user } = useAuth(); // Destructure the user object
+  const { user } = useAuth();
+  const [qrCodeData, setQrCodeData] = useState<string | null>(null);
   useEffect(() => {
     const handlePopstate = () => {
       setIsShowNav(true);
@@ -67,6 +69,30 @@ const Dashboard: React.FC = () => {
     fetchEvents();
   }, [user]);
 
+  const generateAndDownloadQRCode = async () => {
+    // Assuming you have some data to encode into the QR code
+    const registrationNumber = user.registration;
+    const userName = user.name; 
+    const qrCodeData = `${registrationNumber},${userName}`;
+
+    setQrCodeData(qrCodeData);
+
+    // Create a canvas element to generate the QR code
+    const canvas = document.createElement('canvas');
+
+    // Generate QR code on the canvas using qrcode library
+    await toCanvas(canvas, qrCodeData, { scale: 10 });
+
+    // Generate a data URL from the canvas
+    const dataUrl = canvas.toDataURL('image/png');
+
+    // Create a link element to download the QR code image
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = 'E-Pass.png';
+    link.click();
+  };
+
 
   return (
     <div>
@@ -78,7 +104,10 @@ const Dashboard: React.FC = () => {
             <div className='lg:w-2/3 text-center mx-auto'>
               {user?.isVerified && (
                 <>
-                  <button className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-4">
+                  <button
+                    onClick={generateAndDownloadQRCode}
+                    className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-4"
+                  >
                     Download E-Pass
                   </button>
                 </>
