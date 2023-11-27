@@ -1,5 +1,5 @@
 import React from 'react'
-import {  sujay, profile } from '../images/team'
+import {  sujay, profile, mayank,saurabh, sujal, aman, shaswat, aakash } from '../images/team'
 import Image from 'next/image'
 import { twitter, linkedin, github} from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -19,7 +19,7 @@ const teamDetails = [
     },
     {
         name: 'Mayank Chaturvedy',
-        image: profile,
+        image: mayank,
         year: "3'rd year CSE",
         linkedin: 'https://www.linkedin.com/in/mayank-chaturvedy/',
         github: 'https://github.com/',
@@ -29,7 +29,7 @@ const teamDetails = [
     },
     {
         name: 'Saurabh Singh',
-        image: profile,
+        image: saurabh,
         year: "3'rd year CSE",
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
@@ -38,8 +38,8 @@ const teamDetails = [
 
     },
     {
-        name: 'Aakash Kumar',
-        image: profile,
+        name: 'Akash Kumar',
+        image: aakash,
         year: "3'rd year CSE",
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
@@ -49,7 +49,7 @@ const teamDetails = [
     },
     {
         name: 'Shashwat Gupta',
-        image: profile,
+        image: shaswat,
         year: "3'rd year CSE",
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
@@ -59,7 +59,7 @@ const teamDetails = [
     },
     {
         name: 'Aman Patel',
-        image: profile,
+        image: aman,
         year: "3'rd year ECE",
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
@@ -69,7 +69,7 @@ const teamDetails = [
     },
     {
         name: 'Sujal Sharma',
-        image: profile,
+        image: sujal,
         year: "3'rd year ECE",
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
