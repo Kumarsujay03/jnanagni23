@@ -312,13 +312,15 @@ const AdminDashboard: React.FC = () => {
                                                     <td className='py-3 px-6 text-white'>{participant.user_email}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_phone}</td>
                                                     <td className='py-3 px-6 text-white'>{participant.user_registeration}</td>
-                                                    <button
-                                                        className={`text-white ${participant.verified ? 'bg-green-700' : 'bg-red-700'
-                                                            } hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
-                                                        onClick={() => handleVerify(participant.id, !participant.verified)}
-                                                    >
-                                                        {participant.verified ? 'Verified' : 'Unverified'}
-                                                    </button>
+                                                    <td className='py-3 px-6 text-white'>
+                                                        <button
+                                                            className={`text-white ${participant.verified ? 'bg-green-700' : 'bg-red-700'
+                                                                } hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
+                                                            onClick={() => handleVerify(participant.id, !participant.verified)}
+                                                        >
+                                                            {participant.verified ? 'Verified' : 'Unverified'}
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
