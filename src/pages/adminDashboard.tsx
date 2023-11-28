@@ -262,35 +262,39 @@ const AdminDashboard: React.FC = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Name</th>
-                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Email</th>
-                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Phone</th>
-                                        <th className='py-3 px-6 text-left text-white text-lg font-bold'>Registration</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {userDetails.map((user) => (
-                                        <tr key={user.user_id}>
-                                            <td className='py-3 px-6 text-white'>{user.name}</td>
-                                            <td className='py-3 px-6 text-white'>{user.email}</td>
-                                            <td className='py-3 px-6 text-white'>{user.phone}</td>
-                                            <td className='py-3 px-6 text-white'>{user.registration}</td>
-                                            <td className='py-3 px-6 text-white'>
-                                                <button
-                                                    className={`text-white ${user.isVerified ? 'bg-green-700' : 'bg-red-700'}
-        hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
-                                                    onClick={() => handleUserVerify(user.user_id, user.isVerified)}
-                                                >
-                                                    {user.isVerified ? 'Verified' : 'Unverified'}
-                                                </button>
-                                            </td>
+                            <div>
+                                <h2 className='text-white text-lg font-bold mt-4'>Users Details for Verification</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th className='py-3 px-6 text-left text-white text-lg font-bold'>Name</th>
+                                            <th className='py-3 px-6 text-left text-white text-lg font-bold'>Email</th>
+                                            <th className='py-3 px-6 text-left text-white text-lg font-bold'>Phone</th>
+                                            <th className='py-3 px-6 text-left text-white text-lg font-bold'>Registration</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {userDetails.map((user) => (
+                                            <tr key={user.user_id}>
+                                                <td className='py-3 px-6 text-white'>{user.name}</td>
+                                                <td className='py-3 px-6 text-white'>{user.email}</td>
+                                                <td className='py-3 px-6 text-white'>{user.phone}</td>
+                                                <td className='py-3 px-6 text-white'>{user.registration}</td>
+                                                <td className='py-3 px-6 text-white'>
+                                                    <button
+                                                        className={`text-white ${user.isVerified ? 'bg-green-700' : 'bg-red-700'}
+            hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
+                                                        onClick={() => handleUserVerify(user.user_id, user.isVerified)}
+                                                    >
+                                                        {user.isVerified ? 'Verified' : 'Unverified'}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                             </div>
+
 
                             {/* Display the sub-table for participant details */}
                             {selectedEvent && (
