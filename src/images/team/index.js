@@ -6,6 +6,8 @@ import shaswat from './shaswat.jpg'
 import saurabh from './saurabh.jpg'
 import aman from './aman.jpg'
 import aakash from './aakash.jpg'
+import mohit from './mohit.jpg'
+import devashish from './devashish.jpg'
 
 
-export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash }
+export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish }
