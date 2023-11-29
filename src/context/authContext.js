@@ -1,6 +1,6 @@
 // authContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import { getDatabase, ref as databaseRef, get } from 'firebase/database';
 import { app } from '../../firebase';
 
@@ -13,6 +13,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const auth = getAuth(app);
     const userDatabaseRef = getDatabase();
+
+    // Set session persistence to browser session
+    setPersistence(auth, browserSessionPersistence);
 
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
