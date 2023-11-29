@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       const inactiveDuration = currentTime - lastActivity;
 
       // Set the auto-logout duration (5 minutes)
-      const autoLogoutDuration = 1 * 60 * 1000;
+      const autoLogoutDuration = 2 * 60 * 1000;
 
       if (inactiveDuration > autoLogoutDuration) {
         // Perform logout action when inactive for more than 5 minutes
