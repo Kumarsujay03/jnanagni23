@@ -3,13 +3,9 @@ import React from 'react';
 interface MobileMenuProps {
   onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
-
 const MobileMenu: React.FC<MobileMenuProps> = ({ onClick }) => {
   return (
-    <div
-      className='text-white dark:text-gray-300 rounded-full p-3.5 inline-flex items-center justify-center hover:text-gray-700 hover:bg-gray-300 cursor-pointer focus:outline-none general-ring-state'
-      onClick={onClick}
-    >
+    <div className=' text-white dark:text-gray-300 rounded-full p-3.5 inline-flex items-center justify-center hover:text-gray-700 hover:bg-gray-300 cursor-pointer focus:outline-none general-ring-state'>
       <span className='sr-only'>Open menu</span>
       <svg width='24' height='24' fill='none' viewBox='0 0 24 24'>
         <path

@@ -143,13 +143,16 @@ const NavMenu = () => {
               </svg>
             </button>
             <ul className='space-y-6'>
-              {navItems.map(({ href, text }) => (
-                <li key={href}>
-                  <NextLink href={href}>
-                    <p className='hover:text-lightGreen dark:hover:text-emerald-500'>{text}</p>
+              {navItems.map(({ href, text }, index) => (
+                <li key={index}>
+                  <NextLink href={{ pathname: href, query: { showNav: text !== 'Home' ? 'true' : 'false' } }}>
+                    <p className='hover:text-lightGreen dark:hover:text-emerald-500'>
+                      {text}
+                    </p>
                   </NextLink>
                 </li>
               ))}
+
               {/* Include the login/logout button here */}
               <li>
                 {email ? (
