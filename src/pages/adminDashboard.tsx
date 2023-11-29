@@ -275,7 +275,7 @@ const AdminDashboard: React.FC = () => {
                                 </tbody>
                             </table>
                             <div>
-                                <h2 className='text-white text-lg font-bold mt-4'>User Details for Verification</h2>
+                                <h2 className='text-white text-lg font-bold mt-4'>Users Details for Verification</h2>
                                 <table>
                                     <thead>
                                         <tr>
