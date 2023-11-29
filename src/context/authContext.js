@@ -1,76 +1,87 @@
 // authContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getDatabase, ref as databaseRef, get } from 'firebase/database';
 import { app } from '../../firebase';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [lastActivity, setLastActivity] = useState(new Date());
 
   useEffect(() => {
-    const auth = getAuth(app); 
+    const auth = getAuth(app);
+    const userDatabaseRef = getDatabase();
 
-    const handleUserInteraction = () => {
-      clearTimeout(logoutTimer);
-      logoutTimer = setTimeout(logoutUser, 5 * 60 * 1000); 
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        handleUserInteraction();
-      }
-    };
-
-    const logoutUser = () => {
-      // Perform logout actions
-      signOut(auth).then(() => {
-        // Redirect to logout page or do other cleanup
-        console.log('User logged out due to inactivity');
-      });
-    };
-
-    // Set up event listeners for user interaction
-    document.addEventListener('mousemove', handleUserInteraction);
-    document.addEventListener('keydown', handleUserInteraction);
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
-        const userData = { /* retrieve user data as needed */ };
+        const userRef = databaseRef(userDatabaseRef, `users/${authUser.uid}`);
+        const userSnapshot = await get(userRef);
 
-        setUser({
-          uid: authUser.uid,
-          name: userData.name,
-          email: authUser.email,
-          phone: userData.phone,
-          registration: userData.registrationNumber,
-          isAdmin: userData.isAdmin || false,
-          isCore: userData.isCore || false,
-          isVerified: userData.isVerified || false,
-        });
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.val();
 
-        // Set up initial auto logout timer
-        logoutTimer = setTimeout(logoutUser, 5 * 60 * 1000); // 5 minutes
+          setUser({
+            uid: authUser.uid,
+            name: userData.name,
+            email: authUser.email,
+            phone: userData.phone,
+            registration: userData.registrationNumber,
+            isAdmin: userData.isAdmin || false,
+            isCore: userData.isCore || false,
+            isVerified: userData.isVerified || false,
+          });
+        } else {
+          setUser(null);
+        }
       } else {
         setUser(null);
       }
     });
 
-    return () => {
-      unsubscribe();
-      // Remove event listeners when component unmounts
-      document.removeEventListener('mousemove', handleUserInteraction);
-      document.removeEventListener('keydown', handleUserInteraction);
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      // Clear the auto logout timer when component unmounts
-      clearTimeout(logoutTimer);
+    const handleUserActivity = () => {
+      setLastActivity(new Date());
     };
-  }, []);
 
-  let logoutTimer;
+    const checkAutoLogout = () => {
+      const currentTime = new Date();
+      const inactiveDuration = currentTime - lastActivity;
+
+      // Set the auto-logout duration (5 minutes)
+      const autoLogoutDuration = 1 * 60 * 1000;
+
+      if (inactiveDuration > autoLogoutDuration) {
+        // Perform logout action when inactive for more than 5 minutes
+        signOut(auth);
+      }
+    };
+
+    const handleBeforeUnload = () => {
+      // Trigger the last activity update before unloading
+      handleUserActivity();
+
+      // Check for auto-logout one last time
+      checkAutoLogout();
+    };
+
+    // Attach event listeners for user activity
+    document.addEventListener('mousemove', handleUserActivity);
+    document.addEventListener('keydown', handleUserActivity);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Check auto-logout every minute
+    const checkAutoLogoutInterval = setInterval(checkAutoLogout, 60 * 1000);
+
+    // Cleanup
+    return () => {
+      clearInterval(checkAutoLogoutInterval);
+      document.removeEventListener('mousemove', handleUserActivity);
+      document.removeEventListener('keydown', handleUserActivity);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      unsubscribe();
+    };
+  }, [lastActivity]);
 
   return (
     <AuthContext.Provider value={{ user }}>
