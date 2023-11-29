@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Header = () => {
-    const videoUrl = "https://firebasestorage.googleapis.com/v0/b/jnanagni-react-ee7df.appspot.com/o/video%2Fbackground_video.mp4?alt=media&token=73a7291a-3e56-4e73-8be0-0f4e163d67d9";
+    const videoUrl = "https://res.cloudinary.com/dse70o2yh/video/upload/f_auto:video,q_auto/fg64mnchurwji2nqvswt";
 
     return (
         <>
