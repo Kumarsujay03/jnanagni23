@@ -218,6 +218,18 @@ const AdminDashboard: React.FC = () => {
         fetchUserDetails();
     }, [user]);
 
+    const sortedUserDetails = userDetails.sort((a, b) => {
+        // Assuming isVerified is a boolean property
+        if (a.isVerified && !b.isVerified) {
+          return 1; // Move verified users to the end
+        } else if (!a.isVerified && b.isVerified) {
+          return -1; // Move unverified users to the beginning
+        } else {
+          return 0; // Leave the order unchanged for users with the same verification status
+        }
+      });
+      
+
 
     return (
         <div>
@@ -274,7 +286,7 @@ const AdminDashboard: React.FC = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {userDetails.map((user) => (
+                                        {sortedUserDetails.map((user) => (
                                             <tr key={user.user_id}>
                                                 <td className='py-3 px-6 text-white'>{user.name}</td>
                                                 <td className='py-3 px-6 text-white'>{user.email}</td>
@@ -283,7 +295,7 @@ const AdminDashboard: React.FC = () => {
                                                 <td className='py-3 px-6 text-white'>
                                                     <button
                                                         className={`text-white ${user.isVerified ? 'bg-green-700' : 'bg-red-700'}
-            hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
+        hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800`}
                                                         onClick={() => handleUserVerify(user.user_id, user.isVerified)}
                                                     >
                                                         {user.isVerified ? 'Verified' : 'Unverified'}
@@ -293,8 +305,7 @@ const AdminDashboard: React.FC = () => {
                                         ))}
                                     </tbody>
                                 </table>
-                             </div>
-
+                            </div>
 
                             {/* Display the sub-table for participant details */}
                             {selectedEvent && (
