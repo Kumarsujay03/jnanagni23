@@ -8,6 +8,7 @@ import aman from './aman.jpg'
 import aakash from './aakash.jpg'
 import mohit from './mohit.jpg'
 import devashish from './devashish.jpg'
+import priyanshu from './priyanshu.jpg'
 
 
-export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish }
+export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish, priyanshu }
