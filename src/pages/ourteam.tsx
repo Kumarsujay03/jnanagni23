@@ -1,5 +1,5 @@
 import React from 'react'
-import {  sujay, profile, mayank,saurabh, sujal, aman, shaswat, aakash, mohit, devashish } from '../images/team'
+import {  sujay, profile, mayank,saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu } from '../images/team'
 import Image from 'next/image'
 import { twitter, linkedin, github} from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -94,6 +94,16 @@ const teamDetails = [
         linkedin: 'https://www.linkedin.com/in/',
         github: 'https://github.com/',
         twitter: 'https://twitter.com/',
+        instagram: 'https://www.instagram.com/',
+
+    },
+    {
+        name: 'Priyanshu Jingar',
+        image: priyanshu,
+        year: "3'rd year ME",
+        linkedin: 'https://www.linkedin.com/in/priyanshu-jingar-286b3a236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
+        github: 'https://github.com/',
+        twitter: 'https://twitter.com/Priyanshu020713?t=yuq2WXewqqhgAHQKpBrqyw&s=08',
         instagram: 'https://www.instagram.com/',
 
     },
