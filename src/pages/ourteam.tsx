@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal } from '../images/team'
+import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman } from '../images/team'
 import Image, { StaticImageData } from 'next/image'
 import { twitter, linkedin, github } from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -130,10 +130,10 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Ankit Parida',
-        image: profile,
+        image: ankit,
         year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
+        linkedin: 'https://www.linkedin.com/in/ankit-parida-525021242/',
+        github: 'https://github.com/Ankit6989',
         twitter: 'https://twitter.com/',
         instagram: 'https://www.instagram.com/',
         category: 'Event Lead',
@@ -150,11 +150,11 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Anshuman Rath',
-        image: profile,
+        image: anshuman,
         year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
+        linkedin: 'http://www.linkedin.com/in/anshuman-rath-23aa64235',
+        github: 'http://github.com/javarath',
+        twitter: 'http://twitter.com/AnshumanRath14',
         instagram: 'https://www.instagram.com/',
         category: 'Event Lead',
     },
