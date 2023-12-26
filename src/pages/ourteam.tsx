@@ -228,9 +228,9 @@ const Ourteam = () => {
                             <div
                                 key={category}
                                 onClick={() => handleTabClick(category)}
-                                className={`text-white hover:bg-[#EACD69] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center dark:bg-green-600 dark:hover:bg-[#EACD69] dark:focus:ring-green-800 ${category === activeCategory
-                                        ? 'bg-[#EACD69] dark:bg-[#EACD69]' // Changed to yellow background for the active tab
-                                        : 'text-gray-500'
+                                className={`text-white hover:bg-[#EACD69] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center ${category === activeCategory
+                                        ? 'bg-[#EACD69]'
+                                        : 'bg-green-700 dark:bg-green-600'
                                     }`}
                             >
                                 {category}
