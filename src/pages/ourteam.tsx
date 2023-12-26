@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra } from '../images/team'
+import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjel } from '../images/team'
 import Image, { StaticImageData } from 'next/image'
 import { twitter, linkedin, github } from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -120,11 +120,11 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Akshat Sengar',
-        image: profile,
+        image: akshat,
         year: "3'rd year ECE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
+        linkedin: 'https://linkedin.com/in/theakshatsengar',
+        github: 'https://youtube.com/theakshatsengar',
+        twitter: 'https://twitter.com/theakshatsengar',
         instagram: 'https://www.instagram.com/',
         category: 'Event Lead',
     },
@@ -140,11 +140,11 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Ashutosh Kumar',
-        image: profile,
+        image: ashutosh,
         year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
+        linkedin: 'https://www.linkedin.com/in/ashutosh-kumar-4b1a65297/',
+        github: 'https://github.com/akvishvabandhu207',
+        twitter: 'https://x.com/Ashutoshku13778?t=MVnyjfFXPSUNmSG2XXi4HQ&s=09',
         instagram: 'https://www.instagram.com/',
         category: 'Event Lead',
     },
@@ -160,9 +160,9 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Ariyan Mahakur',
-        image: profile,
+        image: aryan,
         year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
+        linkedin: 'https://www.linkedin.com/in/ariyan-mahakur-28a156229/',
         github: 'https://github.com/',
         twitter: 'https://twitter.com/',
         instagram: 'https://www.instagram.com/',
@@ -170,11 +170,11 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Pranjal Mani Dwivedi',
-        image: profile,
+        image: pranjel,
         year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
+        linkedin: 'http://www.linkedin.com/in/pranjal-mani-dwivedi',
+        github: 'https://github.com/Pranjalmani',
+        twitter: 'https://twitter.com/MrPrjld1',
         instagram: 'https://www.instagram.com/',
         category: 'Event Lead',
     },
