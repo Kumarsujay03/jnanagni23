@@ -9,6 +9,12 @@ import aakash from './aakash.jpg'
 import mohit from './mohit.jpg'
 import devashish from './devashish.jpg'
 import priyanshu from './priyanshu.jpg'
+import rudra from './Rudra.jpg'
+import akshat from './akshat.jpg'
+import aryan from './aryan.jpg'
+import ashutosh from './ashutosh.jpg'
+import pranjal from './pranjal.jpg'
+import ankit from './ankit.jpg'
+import anshuman from './anshuman.jpg'
 
-
-export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish, priyanshu }
+export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman }
