@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjel } from '../images/team'
+import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal } from '../images/team'
 import Image, { StaticImageData } from 'next/image'
 import { twitter, linkedin, github } from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -170,7 +170,7 @@ const teamDetails: TeamMember[] = [
     },
     {
         name: 'Pranjal Mani Dwivedi',
-        image: pranjel,
+        image: pranjal,
         year: "3'rd year CSE",
         linkedin: 'http://www.linkedin.com/in/pranjal-mani-dwivedi',
         github: 'https://github.com/Pranjalmani',
