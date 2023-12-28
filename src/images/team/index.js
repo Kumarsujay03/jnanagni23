@@ -16,5 +16,8 @@ import ashutosh from './ashutosh.jpg'
 import pranjal from './pranjal.jpg'
 import ankit from './ankit.jpg'
 import anshuman from './anshuman.jpg'
+import abhinandan from './abhinandan.jpg'
+import keshav from './keshav.jpg'
+import saket from './saket.jpg'
 
-export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman }
+export { profile, sujay, sujal, mayank, shaswat, saurabh, aman, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman, abhinandan, keshav, saket }
