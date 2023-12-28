@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman, abhinandan, keshav, saket } from '../images/team'
-import Image, { StaticImageData } from 'next/image'
+import React, { useState, useEffect } from 'react';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { twitter, linkedin, github } from '../images/icons';
 import NavMenu from '@/components/NavMenu';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 
 interface TeamMember {
     name: string;
-    image: StaticImageData;
+    image: string; // Change to string as Firestore stores URLs as strings
     year: string;
     linkedin: string;
     github: string;
@@ -17,211 +17,35 @@ interface TeamMember {
     category: string;
 }
 
-const teamDetails: TeamMember[] = [
-    {
-        name: 'Sujay Kumar',
-        image: sujay,
-        year: "3'rd year ECE",
-        linkedin: 'https://www.linkedin.com/in/kumarsujay03/',
-        github: 'https://github.com/kumar_sujay03',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/Kumarsujay03',
-        category: 'Web Lead',
-    },
-    {
-        name: 'Mayank Chaturvedy',
-        image: mayank,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/mayank-chaturvedy/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Saurabh Singh',
-        image: saurabh,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Akash Kumar',
-        image: aakash,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Shashwat Gupta',
-        image: shaswat,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Aman Patel',
-        image: aman,
-        year: "3'rd year ECE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Sujal Sharma',
-        image: sujal,
-        year: "3'rd year ECE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Devansh Saini',
-        image: devashish,
-        year: "3'rd year EE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Mohit Verma',
-        image: mohit,
-        year: "3'rd year EE",
-        linkedin: 'https://www.linkedin.com/in/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Priyanshu Jingar',
-        image: priyanshu,
-        year: "3'rd year ME",
-        linkedin: 'https://www.linkedin.com/in/priyanshu-jingar-286b3a236?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/Priyanshu020713?t=yuq2WXewqqhgAHQKpBrqyw&s=08',
-        instagram: 'https://www.instagram.com/',
-        category: 'Core Lead',
-    },
-    {
-        name: 'Akshat Sengar',
-        image: akshat,
-        year: "3'rd year ECE",
-        linkedin: 'https://linkedin.com/in/theakshatsengar',
-        github: 'https://youtube.com/theakshatsengar',
-        twitter: 'https://twitter.com/theakshatsengar',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Ankit Parida',
-        image: ankit,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/ankit-parida-525021242/',
-        github: 'https://github.com/Ankit6989',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Ashutosh Kumar',
-        image: ashutosh,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/ashutosh-kumar-4b1a65297/',
-        github: 'https://github.com/akvishvabandhu207',
-        twitter: 'https://x.com/Ashutoshku13778?t=MVnyjfFXPSUNmSG2XXi4HQ&s=09',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Anshuman Rath',
-        image: anshuman,
-        year: "3'rd year CSE",
-        linkedin: 'http://www.linkedin.com/in/anshuman-rath-23aa64235',
-        github: 'http://github.com/javarath',
-        twitter: 'http://twitter.com/AnshumanRath14',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Ariyan Mahakur',
-        image: aryan,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/ariyan-mahakur-28a156229/',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Pranjal Mani Dwivedi',
-        image: pranjal,
-        year: "3'rd year CSE",
-        linkedin: 'http://www.linkedin.com/in/pranjal-mani-dwivedi',
-        github: 'https://github.com/Pranjalmani',
-        twitter: 'https://twitter.com/MrPrjld1',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Abhinandan Vatsalya',
-        image: abhinandan,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/abhinandan-vatsalya-577590250',
-        github: 'https://github.com/Pranjalmani',
-        twitter: 'https://twitter.com/MrPrjld1',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },{
-        name: 'Saket Kumar',
-        image: saket,
-        year: "3'rd year ME",
-        linkedin: 'https://www.linkedin.com/in/saket-kumar-b49958279',
-        github: 'https://github.com/Pranjalmani',
-        twitter: 'https://twitter.com/MrPrjld1',
-        instagram: 'https://www.instagram.com/',
-        category: 'Event Lead',
-    },
-    {
-        name: 'Rudra Prakash Pandey',
-        image: rudra,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/rudraprakashpandey',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Finance Lead',
-    },
-    {
-        name: 'Keshav Yadav',
-        image: keshav,
-        year: "3'rd year CSE",
-        linkedin: 'https://www.linkedin.com/in/keshav-yadav-a2a951236',
-        github: 'https://github.com/',
-        twitter: 'https://twitter.com/',
-        instagram: 'https://www.instagram.com/',
-        category: 'Finance Lead',
-    },
-];
-
 const Ourteam = () => {
     const router = useRouter();
     const showNav = router.query.showNav;
+
+    const [teamDetails, setTeamDetails] = useState<TeamMember[]>([]);
+    const [activeCategory, setActiveCategory] = useState<string>('');
+
+    // Fetch data from Firestore
+    const fetchTeamData = async () => {
+        const db = getFirestore();
+        const teamCollection = collection(db, 'team');
+        const teamSnapshot = await getDocs(teamCollection);
+        const teamData: TeamMember[] = [];
+
+        teamSnapshot.forEach((doc) => {
+            teamData.push(doc.data() as TeamMember);
+        });
+
+        setTeamDetails(teamData);
+
+        // Set the default category as the first category in your data
+        if (teamData.length > 0) {
+            setActiveCategory(teamData[0].category);
+        }
+    };
+
+    useEffect(() => {
+        fetchTeamData();
+    }, []);
 
     // Group team members by category
     const teamByCategory: Record<string, TeamMember[]> = teamDetails.reduce((acc, member) => {
@@ -231,8 +55,6 @@ const Ourteam = () => {
         acc[member.category].push(member);
         return acc;
     }, {} as Record<string, TeamMember[]>);
-
-    const [activeCategory, setActiveCategory] = useState<string>(Object.keys(teamByCategory)[0]);
 
     const handleTabClick = (category: string) => {
         setActiveCategory(category);
@@ -258,8 +80,8 @@ const Ourteam = () => {
                                 key={category}
                                 onClick={() => handleTabClick(category)}
                                 className={`text-white hover:bg-[#EACD69] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base px-6 py-3.5 text-center ${category === activeCategory
-                                        ? 'bg-[#EACD69]'
-                                        : 'bg-green-700 dark:bg-green-600'
+                                    ? 'bg-[#EACD69]'
+                                    : 'bg-green-700 dark:bg-green-600'
                                     }`}
                             >
                                 {category}
@@ -269,10 +91,10 @@ const Ourteam = () => {
 
                     {/* Display team members for the active category */}
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 m-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 pt-10">
-                        {teamByCategory[activeCategory].map((item) => (
+                        {teamByCategory[activeCategory]?.map((item) => (
                             <div key={item.name} className="w-[300px] px-6 py-6 text-center bg-slate-200 rounded-lg lg:mt-0 xl:px-10">
                                 <div className="space-y-4 xl:space-y-6">
-                                    <Image className="mx-auto rounded-full h-36 w-36" src={item.image.src} alt="author avatar" width={20} height={30} />
+                                    <img className="mx-auto rounded-full h-36 w-36" src={item.image} alt="author avatar" />
                                     <div className="space-y-2">
                                         <div className="flex justify-center items-center flex-col space-y-3 text-lg font-medium leading-6">
                                             <h1 className="text-black font-bold">{item.name}</h1>
