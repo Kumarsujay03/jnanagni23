@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman } from '../images/team'
+import { sujay, profile, mayank, saurabh, sujal, aman, shaswat, aakash, mohit, devashish, priyanshu, rudra, akshat, aryan, ashutosh, pranjal, ankit, anshuman, abhinandan, keshav, saket } from '../images/team'
 import Image, { StaticImageData } from 'next/image'
 import { twitter, linkedin, github } from '../images/icons';
 import NavMenu from '@/components/NavMenu';
@@ -179,10 +179,39 @@ const teamDetails: TeamMember[] = [
         category: 'Event Lead',
     },
     {
+        name: 'Abhinandan Vatsalya',
+        image: abhinandan,
+        year: "3'rd year CSE",
+        linkedin: 'https://www.linkedin.com/in/abhinandan-vatsalya-577590250',
+        github: 'https://github.com/Pranjalmani',
+        twitter: 'https://twitter.com/MrPrjld1',
+        instagram: 'https://www.instagram.com/',
+        category: 'Event Lead',
+    },{
+        name: 'Saket Kumar',
+        image: saket,
+        year: "3'rd year ME",
+        linkedin: 'https://www.linkedin.com/in/saket-kumar-b49958279',
+        github: 'https://github.com/Pranjalmani',
+        twitter: 'https://twitter.com/MrPrjld1',
+        instagram: 'https://www.instagram.com/',
+        category: 'Event Lead',
+    },
+    {
         name: 'Rudra Prakash Pandey',
         image: rudra,
         year: "3'rd year CSE",
         linkedin: 'https://www.linkedin.com/in/rudraprakashpandey',
+        github: 'https://github.com/',
+        twitter: 'https://twitter.com/',
+        instagram: 'https://www.instagram.com/',
+        category: 'Finance Lead',
+    },
+    {
+        name: 'Keshav Yadav',
+        image: keshav,
+        year: "3'rd year CSE",
+        linkedin: 'https://www.linkedin.com/in/keshav-yadav-a2a951236',
         github: 'https://github.com/',
         twitter: 'https://twitter.com/',
         instagram: 'https://www.instagram.com/',
