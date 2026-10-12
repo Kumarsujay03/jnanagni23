@@ -36,7 +36,7 @@ Held **30 Nov – 2 Dec** at the Faculty of Engineering & Technology.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/<your-username>/jnanagni23.git
+   git clone https://github.com/Kumarsujay03/jnanagni23.git
    cd jnanagni23
    ```
 
