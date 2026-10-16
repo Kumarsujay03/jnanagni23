@@ -1,5 +1,7 @@
 # JÑĀNĀGNI 2023
 
+<p align="center"><img src="docs/banner.png" alt="JÑĀNĀGNI 2023 banner" width="100%"></p>
+
 The official website for **JÑĀNĀGNI 2023**, a 3-day techno-cultural fest hosted by the Faculty of Engineering & Technology. The site showcases events, a gallery, sponsors, and the organizing team, and includes authentication with an e-pass (QR code) system for registered participants.
 
 Held **30 Nov – 2 Dec** at the Faculty of Engineering & Technology.
